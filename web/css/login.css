@@ -1,0 +1,13 @@
+.panel-primary{
+    position: absolute;
+    top: 20%;
+    left: 30%;
+}
+
+body{
+    background: #000000;
+}
+
+.backlogin{
+    background-image: url("../images/login.GIF");
+}

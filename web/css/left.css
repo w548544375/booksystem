@@ -1,0 +1,32 @@
+.left-group{
+    position: fixed;
+    left: 0px;
+    top: 55px;
+}
+
+
+.custom-list-group a{
+    background-color: #222222;
+    color: #ffffff;
+}
+
+.custom-list-group a{
+    text-align: center;
+}
+
+.custom-list-group a:hover{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
+.custom-col{
+    position: fixed;
+    left: 0px;
+    top: 260px;
+}
+
+a{
+    cursor: pointer;
+}
+/*清楚左边距**/

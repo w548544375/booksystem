@@ -1,0 +1,4 @@
+jdbcUrl = jdbc:mysql://localhost:3306/booksys?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password = 8536588683
+devMode = true

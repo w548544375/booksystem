@@ -1,0 +1,12 @@
+#classpath
+.classpath
+.project
+booksystem.eml
+booksystem.iml
+booksystem.properties
+booksystem.userlibraries
+booksystem.xml
+module_booksystem.xml
+#idea
+.idea/
+out/

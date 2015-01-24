@@ -1,0 +1,9 @@
+body{
+    background-color: #000000;
+    padding-top: 55px;
+}
+
+.container-fluid{
+    margin: auto 20px;  /*两边margin*/
+}
+
