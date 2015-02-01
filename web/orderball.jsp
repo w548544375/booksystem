@@ -12,6 +12,7 @@
   <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="frame/js/postdata.js"></script>
+  <script type="text/javascript" src="frame/js/inputlimit.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css">
   <link href="css/ball.css" rel="stylesheet" />
   <style type="text/css">
@@ -20,21 +21,18 @@
       font-weight: bold;
       font-family: Helvetica;
     }
-    input{
-      width: 50px;
-    }
-    thead{
-      background:#f7ecb5;
-    }
+
   </style>
 </head>
-<body>
+<body style="width: 80%;">
 <table class="table table-bordered text-center" id="singleball">
   <thead>
     <tr>
       <script type="text/javascript">
         for(var i=0;i<5;i++) {
-          var td = "  <td>号</td><td>赔率</td> <td>金额</td>";
+          var td = "  <td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">号</td>" +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">赔率</td> " +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">金额</td>";
            $("tr").eq(0).append(td);
         }
       </script>
@@ -46,9 +44,9 @@
           for(var i=0;i<2;i++){
             var tr ="<tr>";
             for(var j=1;j<=5;j++){
-              tr+="<td><em class=\"awardBall\">"+k+"</em></td>"+
-                   "<td><span class='singlenumber''>9</span>"+
-                   "<td><input type='text' name='"+k+"' style='width: 50px;'/> </td>";
+              tr+="<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><em class=\"awardBall\">"+k+"</em></td>"+
+                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><span class='singlenumber''>9</span>"+
+                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><input onkeyup=\"digitOnly(this)\" type='text' name='"+k+"' style='width: 50px;'/> </td>";
               k=k+1;
             }
             tr+"</tr>";
@@ -59,7 +57,7 @@
 </table>
 
 <!--单求 -->
-<table class="table table-bordered text-center" style="margin-bottom: 0px;" id="singleballdan">
+<table class="table  text-center" style="margin-bottom: 0px;" id="singleballdan">
   <tr>
     <td><label  name="description">大</label></td>
     <td><span class="sprice">1.9</span></td>
@@ -76,7 +74,7 @@
   </tr>
 </table>
 <!-- 总和 -->
-<table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball6">
+<table class="table  text-center" style="margin-bottom: 0px;" id="ball6">
   <tr>
     <td><label name="description">总和大</label></td>
     <td><span class="tprice">1.9</span></td>
@@ -104,7 +102,7 @@
   </tr>
 </table>
 <!-- 三球 前三-->
-<table class="table table-bordered text-center" id="ball7">
+<table class="table  text-center" id="ball7">
   <thead>
     <tr><td colspan="15">前三</td></tr>
   </thead>
@@ -127,7 +125,7 @@
     </tr>
 </table>
 <!--中三-->
-<table class="table table-bordered text-center" id="ball8">
+<table class="table  text-center" id="ball8">
   <thead>
   <tr><td colspan="15">中三</td></tr>
   </thead>
@@ -150,7 +148,7 @@
   </tr>
 </table>
 <!--后三-->
-<table class="table table-bordered text-center" id="ball9">
+<table class="table  text-center" id="ball9">
   <thead>
   <tr><td colspan="15">后三</td></tr>
   </thead>
@@ -292,4 +290,7 @@
   }
 
 </script>
+<style type="text/css">
+  @import "css/sGame.css";
+</style>
 </html>

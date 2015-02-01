@@ -162,7 +162,7 @@ public class UserService {
         }
 
     /***
-     * 查询用户的下单历史
+     * 查询用户的输赢历史
      * @param starttime  起始时间
      * @param endtime     结束时间
      * @param userids       一个或者多个用户名用<stong>,</stong>隔开
@@ -193,6 +193,15 @@ public class UserService {
                 return null;
             }
         }
+
+
+    public void caculateWin(long starttime,long endtime,String userids,String periods){
+        StringBuilder sql = new StringBuilder();
+        sql.append("");
+    }
+
+
+
 
     /**
      *  获取所有用户的订单
@@ -271,6 +280,19 @@ public class UserService {
                return null;
          }
        }
+
+    /**
+     * 验证用户是否有权限
+     * @param username
+     * @return
+     */
+    public boolean userPrivileges(String username){
+        User user = User.dao.find("select * from sexry_user where username=?", username).get(0);
+        return user.getInt("hasprivileges") == 1? true : false;
+    }
+
+
+
 
 
 

@@ -88,5 +88,9 @@ public class UserController extends Controller{
         renderText(userService.updatePassword((String) getSessionAttr(LoginController.SESSION_KEY_LOGIN_USER),old,newp,false));
 
     }
-
+    //判断用户的页面权限，是否显示操作中心
+    @ActionKey("/user/hasPrivileges")
+    public void userHasPrivileges(){
+        renderJson(userService.userPrivileges((String) getSessionAttr(LoginController.SESSION_KEY_LOGIN_USER)));
+    }
 }

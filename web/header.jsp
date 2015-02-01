@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/header.css" />
     <title>header</title>
 </head>
-<body>
+<body onload="hasPrivileges();">
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -38,7 +38,6 @@
           <li><a href="history.jsp">历史记录</a></li>
           <li><a href="weeksrecord.jsp">两周报表</a></li>
           <li><a href="gamerule.jsp">游戏规则</a></li>
-          <li><a href="user">操作中心</a></li>
         </ul>
         <!-- 退出按钮 -->
         <button type="button" class="btn btn-danger navbar-btn" style="float: right;">退出登录</button>
@@ -72,7 +71,19 @@
       return strPage;
     }
 
-
+   function hasPrivileges(){
+     $.ajax({
+       url:'/user/hasPrivileges',
+       success:function(data){
+         if(data){
+           $(".navbar-nav").append("<li><a href=\"user\">操作中心</a></li>");
+         }else{
+           if((".navbar-nav").find("li").length >6)
+              $(".navbar-nav").find("li").last().remove();
+         }
+       }
+     });
+   }
   </script>
 </body>
 </html>

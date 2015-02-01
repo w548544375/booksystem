@@ -1,135 +1,131 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2014/12/12 0012
-  Time: 上午 0:34
+  User: sexry
+  Date: 1/24/15
+  Time: 17:33
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<html>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> 	<html lang="en"> <!--<![endif]-->
 <head>
+
+  <!-- General Metas -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	<!-- Force Latest IE rendering engine -->
+  <title>登录</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!--[if lt IE 9]>
   <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="frame/css/bootstrap.min.css" />
-  <style type="text/css">
-    @import "css/login.css";
-  </style>
-    <title>登录</title>
+  <![endif]-->
+
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/layout.css">
+
 </head>
 <body>
 
-  <div class="panel panel-primary col-sm-5 ">
-    <div class="panel panel-heading " style="text-align: center;">
-        <h3 class="panel-title">重庆时时彩</h3>
-    </div><!-- title -->
-    <div class="panel panel-body col-sm-12">
-      <div class="form-horizontal well">
-        <!-- 用户名-->
-        <div class="form-group">
-          <label for="username" class="col-sm-2 control-label">用户名:</label>
-          <div class="col-sm-10   has-feedback">
-            <input type="text" class="form-control" id="username" placeholder="请输入用户名" />
-          <%--  <span class="glyphicon glyphicon-remove form-control-feedback"></span>--%>
-          </div>
-        </div> <!-- username form group -->
-
-        <!-- 密码-->
-        <div class="form-group">
-          <label for="password" class="col-sm-2 control-label">密 码:</label>
-          <div class="col-sm-10  has-feedback"><input type="password" class="form-control" id="password" />
-            <%--<span class="glyphicon glyphicon-remove form-control-feedback"></span>--%>
-          </div>
-
-        </div><!-- password form group -->
-
-        <!-- 验证码 -->
-        <div class="form-group">
-          <label for="code" class="col-sm-2 control-label">验证码</label>
-          <div class="col-sm-5  has-error has-feedback"><input type="text" class="form-control" id="code"/>
-            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-          </div>
-          <div class="col-sm-5"><img class="form-control" src="generateValitorImg" /></div>
-
-        </div>
-
-        <!-- 登录按钮-->
-        <div class="form-group">
-          <div class="col-sm-offset-5 col-sm-10">
-            <button id="login" class="btn btn-lg btn-primary">登录</button>
-          </div>
-        </div>
-
-      </div>
-    </div><!-- panelbody-->
-  </div><!-- panel -->
-  <script type="text/javascript">
-    $(document).ready(function(){
-      //验证图形码
-      $("#code").blur(function(){
-        var code = $(this).val();
-          if(code == null || code == ""){
-            $(this).parent(".has-success").removeClass("has-success").addClass("has-error");
-            $(this).next(".glyphicon-ok").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-            return;
-          }else
-          {
-            var obj = $(this);
-            $.ajax({
-              url:'login/validateCode',
-              data:{"code":code},
-              dataType:'json',
-              type:'GET',
-              success: function (data) {
-                  if(data){
-                    obj.parent(".has-error").removeClass("has-error").addClass("has-success");
-                    obj.next(".glyphicon-remove").removeClass("glyphicon-remove").addClass("glyphicon-ok");
-                  }else{
-                    obj.parent(".has-success").removeClass("has-success").addClass("has-error");
-                    obj.next(".glyphicon-ok").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-                  }
-              },
-              error:function(err){}
-            });  //ajax
-          } //end else
-        }); //blur
-
-        
-      $("#login").on("click",function(){
-        var username = $("#username").val();
-        var password = $("#password").val();
-
-        if( username =="" || password == "")
-          return;
-
-        if($("#code").parent(".has-error").length != 0){
-          return;
-        }
-
-        $.ajax({
-          url:'login/validateLogin',
-          data:{"username":username,"password":password},
-          type:'post',
-          success:function(data){
-            if(data == "suc"){
-              //跳转
-              window.location.href ="/main";
-            }else{
-              alert(data);
-            }
-          },
-          error:function(err){
-            console.log(err);
-          }
-
-        });
-      });
+<div class="notice" style="display:none;">
+  <a href="" class="close">close</a>
+  <p class="warn"></p>
+</div>
 
 
-    }); //ready
-  </script>
-  <div class="backlogin">
 
+<!-- Primary Page Layout -->
+
+<div class="container" style="display:none;">
+
+  <div class="form-bg">
+    <form name="login" id="loginform" action="login/validateLogin" onsubmit="return getLoginResult();">
+      <h2>登录</h2>
+      <p><input type="text" name="username" placeholder="用户名"></p>
+      <p><input type="password" name="password" placeholder="输入密码"></p>
+      <p vertical-align: bottom;><input type="text" id="code" placeholder="输入验证码" style="width: 150px;margin-left: 25px;display: inline-block;"><img class="imagecode" src="generateValitorImg" /></p>
+      <button type="submit" ></button>
+      <form>
   </div>
+
+
+  <p class="forgot">您是否忘记密码?<a href="#">联系管理员</a></p>
+
+
+</div><!-- container -->
+
+<!-- JS  -->
+<script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+<script>window.jQuery || document.write("<script src='frame/js/jquery-2.1.1.min.js'>\x3C/script>")</script>
+<script src="frame/js/app.js"></script>
+<script src="frame/js/jquery.form.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    //初始化淡入
+    $(".container").fadeIn(3000);
+    //初始化提交form
+    $("#loginform").ajaxForm();
+    //关闭按钮点击
+    $(".close").on("click",function(){
+      $(".notice").slideUp(2000);
+    });
+    //验证图形码
+    $("#code").blur(function(){
+      var code = $(this).val();
+      //如果验证码为空
+
+      if(code == null || code == "") {
+        noticeMessage("验证码不能为空");
+      }else{
+        $.ajax({
+          url: 'login/validateCode',
+          data: {"code": code},
+          dataType: 'json',
+          type: 'GET',
+          success: function (data) {
+              if(!data){
+                noticeMessage("验证码错误");
+              }
+          }
+        });
+      }
+
+    });
+  });
+
+ function getLoginResult(){
+   //异步表格提交
+   $("#loginform").ajaxSubmit(function(data){
+      if(data!= "suc"){
+        noticeMessage(data);
+      }else{
+        window.location.href="/main";
+      }
+   });
+   return false;
+ }
+
+  //显示消息
+  function noticeMessage(str){
+  $(".warn").html(str);
+  toggleError();
+  setTimeout("toggleError();",3000);
+  }
+
+
+  //淡入淡出
+  function toggleError(){
+    $(".notice").fadeToggle(3000);
+  }
+
+</script>
+<!-- End Document -->
 </body>
 </html>

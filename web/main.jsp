@@ -10,7 +10,6 @@
 <head>
   <link rel="stylesheet" href="css/main.css">
     <title>操作页</title>
-
 </head>
 <body style="background-color: #ffffff;">
 <jsp:include page="header.jsp"></jsp:include>

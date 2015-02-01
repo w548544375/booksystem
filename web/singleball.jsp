@@ -12,35 +12,35 @@
   <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="frame/js/postdata.js"></script>
+  <script type="text/javascript" src="frame/js/inputlimit.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css">
   <link href="css/ball.css" rel="stylesheet" />
+
   <style type="text/css">
     span{
       color:red;
       font-weight: bold;
       font-family: Helvetica;
     }
-    input{
-      width:50px;
-    }
+
   </style>
 </head>
 <body>
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center" style="width:80%;">
   <thead>
     <tr>
-      <td colspan="3">第一球</td>
-      <td colspan="3">第二球</td>
-      <td colspan="3">第三球</td>
-      <td colspan="3">第四球</td>
-      <td colspan="3">第五球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第一球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第二球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第三球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第四球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第五球</td>
     </tr>
     <tr>
       <script type="text/javascript">
         for(var i=0;i<5;i++) {
-          var td = "<td><label>号</label></td>" +
-                  "<td><label>赔率</label></td>" +
-                  "<td><label>金额</label></td>";
+          var td = "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>号</label></td>" +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>赔率</label></td>" +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>金额</label></td>";
           $("tr").eq(1).append(td);
         }
       </script>
@@ -52,9 +52,9 @@
       for(var j=0;j<10;j++){
         var tr = "<tr>";
         for(var k=0;k<5;k++){
-           tr +=    "<td><em class=\"awardBall\">"+j+"</em></td>"+
-                    "<td><span>9</span></td>"+
-                    "<td><input class=ball"+(k+1)+" name='"+j+"' type=\"text\" /></td>";//"|"+j+
+           tr +=    "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><em class=\"awardBall\">"+j+"</em></td>"+
+                    "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><span>9</span></td>"+
+                    "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><input onkeyup=\"digitOnly(this)\" class=ball"+(k+1)+" name='"+j+"' type=\"text\" /></td>";//"|"+j+
         }
         tr+="</tr>";
         $("tbody").append(tr);
@@ -62,7 +62,7 @@
     </script>
   </tbody>
 </table>
-  <div class="text-center">
+  <div class="text-center" style="width:80%;">
     <button class="btn btn-danger">下注</button>
     <button class="btn btn-warning">重填</button>
   </div>
@@ -129,4 +129,7 @@
 
 
 </script>
+<style type="text/css">
+  @import "css/sGame.css";
+</style>
 </html>

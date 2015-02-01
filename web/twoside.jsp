@@ -12,13 +12,15 @@
   <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="frame/js/postdata.js"></script>
+  <script type="text/javascript" src="frame/js/inputlimit.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sGame.css">
 </head>
 <body>
   <!-- 单球买 -->
-  <div id="balls" style="background:gray;border: 2px solid gray;border-radius: 4px;">
+  <div id="balls" style="border-radius: 4px;width: 80%;">
     <!-- 第一球 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
           <div class="panel-title">
             <p class="text-center" style="margin: 0px;">第一球</p>
@@ -27,25 +29,25 @@
       <div class="panel-body" style="padding: 0px;">
           <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball1">
             <tr>
-              <td><label class="form-control" name="description">大</label></td>
-              <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-              <td><input type="text" class="form-control" /></td>
-              <td><label class="form-control" name="description">小</label></td>
-              <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-              <td><input type="text" class="form-control" /></td>
-              <td><label class="form-control" name="description">单</label></td>
-              <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-              <td><input type="text" class="form-control" /></td>
-              <td><label class="form-control" name="description">双</label></td>
-              <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-              <td><input type="text" class="form-control" /></td>
+              <td><label name="description">大</label></td>
+              <td><label class=" sprice" style="color: red;">1.9</label></td>
+              <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+              <td><label name="description">小</label></td>
+              <td><label class=" sprice" style="color: red;">1.9</label></td>
+              <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+              <td><label name="description">单</label></td>
+              <td><label class=" sprice" style="color: red;">1.9</label></td>
+              <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+              <td><label name="description">双</label></td>
+              <td><label class=" sprice" style="color: red;">1.9</label></td>
+              <td><input type="text"  onkeyup="digitOnly(this)"/></td>
             </tr>
           </table>
       </div>
     </div>
 
     <!-- 第二球 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <p class="text-center" style="margin: 0px;">第二球</p>
@@ -54,25 +56,25 @@
       <div class="panel-body" style="padding: 0px;">
         <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball2">
           <tr>
-            <td><label class="form-control" name="description">大</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">小</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">单</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">双</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
+            <td><label name="description">大</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">小</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">单</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">双</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
         </table>
       </div>
     </div>
 
     <!-- 第三球 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <p class="text-center" style="margin: 0px;">第三球</p>
@@ -81,25 +83,25 @@
       <div class="panel-body" style="padding: 0px;">
         <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball3">
           <tr>
-            <td><label class="form-control" name="description">大</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">小</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">单</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control " name="description">双</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
+            <td><label name="description">大</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">小</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">单</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label class=" " name="description">双</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
         </table>
       </div>
     </div>
 
     <!-- 第四球 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <p class="text-center" style="margin: 0px;">第四球</p>
@@ -108,24 +110,24 @@
       <div class="panel-body" style="padding: 0px;">
         <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball4">
           <tr>
-            <td><label class="form-control" name="description">大</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">小</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">单</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">双</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
+            <td><label name="description">大</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">小</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">单</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">双</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
         </table>
       </div>
     </div>
     <!-- 第五球 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <p class="text-center" style="margin: 0px;">第五球</p>
@@ -134,24 +136,24 @@
       <div class="panel-body" style="padding: 0px;">
         <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball5">
           <tr>
-            <td><label class="form-control" name="description">大</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">小</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">单</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
-            <td><label class="form-control" name="description">双</label></td>
-            <td><label class="form-control sprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" /></td>
+            <td><label name="description">大</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">小</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">单</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">双</label></td>
+            <td><label class=" sprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
         </table>
       </div>
     </div>
     <!-- 总和 -->
-    <div class="panel panel-danger">
+    <div class="panel">
       <div class="panel-heading">
         <div class="panel-title">
           <p class="text-center" style="margin: 0px;">总和</p>
@@ -160,29 +162,29 @@
       <div class="panel-body" style="padding: 0px;">
         <table class="table table-bordered text-center" style="margin-bottom: 0px;" id="ball6">
           <tr>
-            <td><label class="form-control" name="description">总和大</label></td>
-            <td><label class="form-control tprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;" /></td>
-            <td><label class="form-control" name="description">总和小</label></td>
-            <td><label class="form-control tprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;"  /></td>
-            <td><label class="form-control " name="description">总和单</label></td>
-            <td><label class="form-control tprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;" /></td>
-            <td><label class="form-control" name="description">总和双</label></td>
-            <td><label class="form-control tprice" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;"  /></td>
+            <td><label name="description">总和大</label></td>
+            <td><label class=" tprice" style="color: red;">1.9</label></td>
+           <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">总和小</label></td>
+            <td><label class=" tprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label class=" " name="description">总和单</label></td>
+            <td><label class=" tprice" style="color: red;">1.9</label></td>
+           <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">总和双</label></td>
+            <td><label class=" tprice" style="color: red;">1.9</label></td>
+            <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
           <tr>
-            <td><label class="form-control" name="description">龙</label></td>
-            <td><label class="form-control long" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;"/></td>
-            <td><label class="form-control" name="description">虎</label></td>
-            <td><label class="form-control hu" style="color: red;">1.9</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;"/></td>
-            <td><label class="form-control" name="description">和</label></td>
-            <td><label class="form-control he" style="color: red;">9.3</label></td>
-            <td><input type="text" class="form-control" style="width: 70px;"/></td>
+            <td><label name="description">龙</label></td>
+            <td><label class=" long" style="color: red;">1.9</label></td>
+     <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">虎</label></td>
+            <td><label class=" hu" style="color: red;">1.9</label></td>
+             <td><input type="text"  onkeyup="digitOnly(this)"/></td>
+            <td><label name="description">和</label></td>
+            <td><label class=" he" style="color: red;">9.3</label></td>
+             <td><input type="text"  onkeyup="digitOnly(this)"/></td>
           </tr>
         </table>
       </div>
