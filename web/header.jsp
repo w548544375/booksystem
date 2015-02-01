@@ -13,6 +13,7 @@
   <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/header.css" />
+  <link href="css/sGame.css" rel="stylesheet" />
     <title>header</title>
 </head>
 <body onload="hasPrivileges();">

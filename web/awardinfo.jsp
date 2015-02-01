@@ -11,18 +11,19 @@
 <head>
     <title></title>
   <link href="css/ball.css" rel="stylesheet" />
+  <link href="css/sGame.css" rel="stylesheet" />
 </head>
 <body>
-<div class="well well-lg">
+<div class="well well-lg" style="width: 80%;margin-bottom: 0px;">
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <span class="text-left">重庆时时彩</span>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <span style="color: red;">今天输赢:</span>
       <label style="color: red;">0.0</label>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6 text-right">
       <span >第<strong class="lastperiod" style="color:red;"></strong>期开奖号码:</span>
           <span id="awardNumber">
             <em class="awardBall">?</em>
@@ -35,12 +36,12 @@
   </div>
   <!-- 第二排 -->
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <span class="text-left"><strong class="curentperiod" style="color:green;"></strong></span>
       <label>期</label>
     </div>
     <div class="col-sm-3">
-      <span style="color: blue;"><strong class="bookType"></strong></span>
+      <span><strong class="bookType" style="color: blue;"></strong></span>
     </div>
     <div class="col-sm-3">
       <label>距离封盘：</label><label id="lefttime"></label>
