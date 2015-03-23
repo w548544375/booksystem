@@ -15,6 +15,7 @@
   <script type="text/javascript" src="frame/js/inputlimit.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css">
   <link href="css/ball.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/sGame.css">
   <style type="text/css">
     span{
       color:red;
@@ -30,9 +31,9 @@
     <tr>
       <script type="text/javascript">
         for(var i=0;i<5;i++) {
-          var td = "  <td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">号</td>" +
-                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">赔率</td> " +
-                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\">金额</td>";
+          var td = "  <td class=\"headback\" style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\">号</td>" +
+                  "<td class=\"headback\" style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\">赔率</td> " +
+                  "<td class=\"headback\" style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\">金额</td>";
            $("tr").eq(0).append(td);
         }
       </script>
@@ -44,9 +45,9 @@
           for(var i=0;i<2;i++){
             var tr ="<tr>";
             for(var j=1;j<=5;j++){
-              tr+="<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><em class=\"awardBall\">"+k+"</em></td>"+
-                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><span class='singlenumber''>9</span>"+
-                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><input onkeyup=\"digitOnly(this)\" type='text' name='"+k+"' style='width: 50px;'/> </td>";
+              tr+="<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><em class=\"l awardBall\">"+k+"</em></td>"+
+                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><span class='singlenumber''>9</span>"+
+                   "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><input onkeyup=\"digitOnly(this)\" type='text' name='"+k+"' style='width: 50px;'/> </td>";
               k=k+1;
             }
             tr+"</tr>";
@@ -104,7 +105,7 @@
 <!-- 三球 前三-->
 <table class="table  text-center" id="ball7">
   <thead>
-    <tr><td colspan="15">前三</td></tr>
+    <tr class="t_list_caption"><td class="headback table-td" style="padding: 4px;" colspan="15">前三</td></tr>
   </thead>
     <tr>
       <td><label name="description">豹子</label></td>
@@ -127,7 +128,7 @@
 <!--中三-->
 <table class="table  text-center" id="ball8">
   <thead>
-  <tr><td colspan="15">中三</td></tr>
+  <tr class="t_list_caption"><td colspan="15" class="headback table-td" style="padding: 4px;">中三</td></tr>
   </thead>
   <tr>
     <td><label name="description">豹子</label></td>
@@ -150,7 +151,7 @@
 <!--后三-->
 <table class="table  text-center" id="ball9">
   <thead>
-  <tr><td colspan="15">后三</td></tr>
+  <tr class="t_list_caption"><td class="headback table-td" style="padding: 4px;" colspan="15">后三</td></tr>
   </thead>
   <tr>
     <td><label name="description">豹子</label></td>
@@ -171,8 +172,8 @@
   </tr>
 </table>
 <div class="text-center">
-  <button class="btn btn-danger">下注</button>
-  <button class="btn btn-warning">重填</button>
+  <button id="startbook" class="inputs ti">下注</button>
+  <button id="reset" class="inputs ti">重填</button>
 </div>
 <div id="printweb" hidden="hidden"></div>
 </body>
@@ -180,7 +181,7 @@
   $(document).ready(function(){
     initPrice();
     //重填
-    $(".btn-warning").on("click",function(){
+    $("#reset").on("click",function(){
       $("input[type='text']").val("");
     });
     //设置最大输入个数
@@ -188,7 +189,7 @@
 
 
     //提交订单
-    $(".btn-danger").on("click",function(){
+    $("#startbook").on("click",function(){
         var ballcode = 0;
         //第几球
           var ballnumber = $(".bookType",parent.document).text();
@@ -290,7 +291,4 @@
   }
 
 </script>
-<style type="text/css">
-  @import "css/sGame.css";
-</style>
 </html>

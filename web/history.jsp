@@ -9,26 +9,28 @@
 <html>
 <head>
     <title>历史记录</title>
+  <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="frame/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sGame.css">
   <link rel="stylesheet" href="css/main.css">
   <link href="css/ball.css" rel="stylesheet" />
   <script type="text/javascript" src="frame/js/page.js"></script>
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="left.jsp"></jsp:include>
-<div class="main-container col-sm-10">
+<div class="col-sm-10">
   <div class="table-responsive">
-    <table class="table table-hover table-bordered" align="center" style="text-align: center;background: #ffffff;">
+    <table class="table table-bordered text-center" align="center" style="text-align: center;background: #ffffff;">
       <thead>
         <tr class="info">
-          <td>期数</td>
-          <td>开奖时间</td>
-          <td>开出号码</td>
-          <td colspan="3">总和</td>
-          <td>龙虎</td>
-          <td>前三</td>
-          <td>中三</td>
-          <td>后三</td>
+          <td class="headback table-td" style="padding: 4px;">期数</td>
+          <td class="headback table-td" style="padding: 4px;">开奖时间</td>
+          <td class="headback table-td" style="padding: 4px;">开出号码</td>
+          <td class="headback table-td" colspan="3" style="padding: 4px;">总和</td>
+          <td class="headback table-td" style="padding: 4px;">龙虎</td>
+          <td class="headback table-td" style="padding: 4px;">前三</td>
+          <td class="headback table-td"  style="padding: 4px;">中三</td>
+          <td class="headback table-td" style="padding: 4px;">后三</td>
         </tr>
       </thead>
       <tbody>
@@ -77,7 +79,7 @@
             var code = row.awardcode;
             var number = "";
             for(var j=0;j<code.length;j++){
-              number += "<em class='awardBall'>"+code.charAt(j)+"</em>";
+              number += "<em class='l awardBall'>"+code.charAt(j)+"</em>";
             }
 
             //总和大小的颜色

@@ -189,9 +189,9 @@
         </table>
       </div>
     </div>
-    <div class="form-group form-inline text-center">
-      <button class="btn btn-danger form-control">下注</button>
-      <button class="btn btn-warning form-control">重填</button>
+    <div class="text-center">
+      <button id="startbook" class="inputs ti">下注</button>
+      <button id="reset" class="inputs ti">重填</button>
     </div>
   </div><!-- balls -->
   <script type="text/javascript">
@@ -199,12 +199,12 @@
       $("input[type='text']").attr("maxlength",4);
         initPrice();
         //重置
-        $(".btn-warning").on("click",function(){
+        $("#reset").on("click",function(){
           $("input").val("");
         });
 
         //下注
-         $(".btn-danger").on("click",function(){
+         $("#startbook").on("click",function(){
 
            var noticeMsg = "";
            var totalmoney = 0;

@@ -9,22 +9,24 @@
 <html>
 <head>
   <title>今日已结</title>
+  <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="frame/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sGame.css">
   <link rel="stylesheet" href="css/main.css">
   <script type="text/javascript" src="frame/js/page.js"></script>
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="left.jsp"></jsp:include>
-<div class="main-container col-sm-10">
+<div class="col-sm-10">
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
     <tr class="alert alert-danger">
-      <td>订单号/时间</td>
-      <td>下注期号</td>
-      <td>订单明细</td>
-      <td>下注金额</td>
-      <td>退水金额</td>
+      <td class="headback table-td" style="padding: 4px;">订单号/时间</td>
+      <td class="headback table-td" style="padding: 4px;">下注期号</td>
+      <td class="headback table-td" style="padding: 4px;">订单明细</td>
+      <td class="headback table-td" style="padding: 4px;">下注金额</td>
+      <td class="headback table-td" style="padding: 4px;">退水金额</td>
     </tr>
     </thead>
     <tbody>

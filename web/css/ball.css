@@ -1,16 +1,8 @@
 .awardBall{
-    background-image:url(/images/newballs.png);
-    background-position: -70px 0;
-    background-repeat: no-repeat;
-    width: 33px;
-    height: 33px;
     display: inline-block;
     text-align: center;
-    line-height: 34px;
-    font-size: 16px;
     font-weight: 700;
-    color: #fff;
-    margin-right: 3px;
+    line-height: 2;
 }
 
 .currentAward{

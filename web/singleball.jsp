@@ -15,7 +15,7 @@
   <script type="text/javascript" src="frame/js/inputlimit.js"></script>
   <link rel="stylesheet" href="frame/css/bootstrap.min.css">
   <link href="css/ball.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="css/sGame.css">
   <style type="text/css">
     span{
       color:red;
@@ -29,18 +29,18 @@
 <table class="table table-bordered text-center" style="width:80%;">
   <thead>
     <tr>
-      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第一球</td>
-      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第二球</td>
-      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第三球</td>
-      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第四球</td>
-      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;">第五球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;">第一球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;">第二球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;">第三球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;">第四球</td>
+      <td colspan="3" class="headback" style="border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;">第五球</td>
     </tr>
     <tr>
       <script type="text/javascript">
         for(var i=0;i<5;i++) {
-          var td = "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>号</label></td>" +
-                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>赔率</label></td>" +
-                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><label>金额</label></td>";
+          var td = "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><label>号</label></td>" +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><label>赔率</label></td>" +
+                  "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:3px;vertical-align: middle;\"><label>金额</label></td>";
           $("tr").eq(1).append(td);
         }
       </script>
@@ -52,7 +52,7 @@
       for(var j=0;j<10;j++){
         var tr = "<tr>";
         for(var k=0;k<5;k++){
-           tr +=    "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><em class=\"awardBall\">"+j+"</em></td>"+
+           tr +=    "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><em class=\"l awardBall\">"+j+"</em></td>"+
                     "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><span>9</span></td>"+
                     "<td style=\"border-bottom-width: 2px;border: 1px solid #E9BA84;padding:1px;vertical-align: middle;\"><input onkeyup=\"digitOnly(this)\" class=ball"+(k+1)+" name='"+j+"' type=\"text\" /></td>";//"|"+j+
         }
@@ -63,8 +63,8 @@
   </tbody>
 </table>
   <div class="text-center" style="width:80%;">
-    <button class="btn btn-danger">下注</button>
-    <button class="btn btn-warning">重填</button>
+    <button id="startbook" class="inputs ti">下注</button>
+    <button id="reset" class="inputs ti">重填</button>
   </div>
 </body>
 <script type="text/javascript">
@@ -74,12 +74,12 @@
 
     $("input[type='text']").attr("maxlength",4);
     //重填
-    $(".btn-warning").on("click",function(){
+    $("#reset").on("click",function(){
       $("input[type='text']").val("");
     });
 
     //下注
-    $(".btn-danger").on("click",function(){
+    $("#startbook").on("click",function(){
 
       var value="";
       var noticemsg="";
@@ -129,7 +129,4 @@
 
 
 </script>
-<style type="text/css">
-  @import "css/sGame.css";
-</style>
 </html>

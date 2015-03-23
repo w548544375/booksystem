@@ -122,7 +122,7 @@ public class BookHistoryService {
      * @param bookdetail  订单详情
      *                    大-122,小-122
      */
-        public List<Map<String,Object>> generateNumberBook(String bookcode,int ballnumber,String bookdetail){
+   public List<Map<String,Object>> generateNumberBook(String bookcode,int ballnumber,String bookdetail){
                 //存储订单的map
               String[] books = bookdetail.split(",");
             List<Map<String,Object>> result = new ArrayList<Map<String, Object>>();
@@ -304,7 +304,7 @@ public class BookHistoryService {
 
                 //user所有未处理的订单
                 for(Record record : records){
-                    Map<String,Object> map = new HashMap<String, Object>();
+
                     String bookcode = record.getStr("bookcode");
                     //查询出所有的订单详细
                    String hql = "select sexry_bookdetail.*,sexry_bookdefine.multiple_number as multiple from sexry_bookdetail inner join sexry_bookdefine on sexry_bookdetail.booktype = sexry_bookdefine.booktype  where sexry_bookdetail.bookcode=?";
@@ -316,6 +316,7 @@ public class BookHistoryService {
                     //每个订单的可赢金额
                     float awardmoney = 0;
                     for(Record detail: details){
+                        Map<String,Object> map = new HashMap<String, Object>();
                         //赔率
                         float multiple = detail.getFloat("multiple");
                         //下注类型
@@ -387,7 +388,7 @@ public class BookHistoryService {
                 Map<String, Object> re_map = new HashMap<String, Object>();
                 List<Map<String, Object>> historys = new ArrayList<Map<String, Object>>();
                 List<Record> records = pagedata.getList();
-                SimpleDateFormat sdf = new SimpleDateFormat("YY-MM E HH:mm:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("YY-dd E HH:mm:ss");
                 for (Record record : records) {
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("booktime", sdf.format(record.getLong("booktime")));
@@ -428,7 +429,7 @@ public class BookHistoryService {
                 //System.out.println(day1+":::::"+day7);
 
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM-DD E");
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd E");
                 List<Record> records = Db.find("select * from sexry_result where booktime>? and booktime < ? and username=?", day1, day7, username);
                 Map<String,Object> result = new HashMap<String, Object>();
                 for (Record record:records){

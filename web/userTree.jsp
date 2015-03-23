@@ -11,7 +11,11 @@
   <title>操作中心</title>
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
+<script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="frame/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/sGame.css">
+<link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="frame/css/zTreeStyle.css">
 <script type="text/javascript" src="frame/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="frame/js/jquery.form.js"></script>

@@ -9,22 +9,24 @@
 <html>
 <head>
     <title>两周报表</title>
+  <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="frame/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sGame.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="left.jsp"></jsp:include>
-<div class="main-container col-sm-10">
+<div class="col-sm-10">
   <div class="table-responsive">
     <table class="table table-bordered text-center" id="lastweek">
         <thead>
           <tr class="info">
-            <th  class="text-center">交易日期</th>
-            <th class="text-center">订单笔数</th>
-            <th class="text-center">下注金额</th>
-            <th class="text-center">输赢结果</th>
-            <th class="text-center">退水</th>
-            <th class="text-center">退水结果</th>
+            <th  class="headback table-td" style="padding: 4px;">交易日期</th>
+            <th class="headback table-td" style="padding: 4px;">订单笔数</th>
+            <th class="headback table-td" style="padding: 4px;">下注金额</th>
+            <th class="headback table-td" style="padding: 4px;">输赢结果</th>
+            <th class="headback table-td" style="padding: 4px;">退水</th>
+            <th class="headback table-td" style="padding: 4px;">退水结果</th>
           </tr>
         </thead>
       <tbody>
@@ -37,12 +39,12 @@
     <table class="table table-bordered text-center" id="curentweek">
       <thead>
       <tr class="info">
-        <th  class="text-center">交易日期</th>
-        <th class="text-center">订单笔数</th>
-        <th class="text-center">下注金额</th>
-        <th class="text-center">输赢结果</th>
-        <th class="text-center">退水</th>
-        <th class="text-center">退水结果</th>
+        <th  class="headback table-td" style="padding: 4px;">交易日期</th>
+        <th class="headback table-td" style="padding: 4px;">订单笔数</th>
+        <th class="headback table-td" style="padding: 4px;">下注金额</th>
+        <th class="headback table-td" style="padding: 4px;">输赢结果</th>
+        <th class="headback table-td" style="padding: 4px;">退水</th>
+        <th class="headback table-td" style="padding: 4px;">退水结果</th>
       </tr>
       </thead>
       <tbody>

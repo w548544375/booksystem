@@ -14,7 +14,7 @@
   <link href="css/sGame.css" rel="stylesheet" />
 </head>
 <body>
-<div class="well well-lg" style="width: 80%;margin-bottom: 0px;">
+<!--<div class="well well-lg" style="width: 80%;margin-bottom: 0px;margin-top: 30px;">
   <div class="row">
     <div class="col-sm-3">
       <span class="text-left">重庆时时彩</span>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <!-- 第二排 -->
-  <div class="row">
+ <!-- <div class="row">
     <div class="col-sm-3">
       <span class="text-left"><strong class="curentperiod" style="color:green;"></strong></span>
       <label>期</label>
@@ -53,6 +53,46 @@
       <label class="text-right">86秒</label>
     </div>--%>
   </div>
+</div> -->
+<div style="margin-top: -320px;color: #000000;">
+<table class="th" cellpadding="0" cellspacing="0" border="0">
+  <tbody>
+  <tr>
+    <td class="bolds" height="20" width="110" style="border:none;color: #000000;">重慶時時彩</td>
+    <td class="bolds" style="color: red;border:none;" width="236">今天輸贏：<span
+            id="sy" style="font-size: 14px; position: relative; top: 1px">0.00</span>
+    </td>
+    <td colspan="8" style="border:none;">
+      <table cellpadding="0" cellspacing="0" align="right" border="0">
+        <tbody>
+        <tr>
+          <td class="bolds" nowrap="nowrap" width="132" style="border:none;color: #000000;"><span
+                  id="number" class="lastperiod"
+                  style="font-size: 14px; position: relative; top: 1px;"></span>期開獎
+          </td>
+          <td id="a" class="l awardBall" style="border:none;color: #000000;"></td>
+          <td id="b" class="l awardBall" style="border:none;color: #000000;"></td>
+          <td id="c" class="l awardBall" style="border:none;color: #000000;"></td>
+          <td id="d" class="l awardBall" style="border:none;color: #000000;"></td>
+          <td id="e" class="l awardBall" style="border:none;color: #000000;"></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td height="30" style="border:none;"><span id="o"
+     class="curentperiod"  style="color: #009900; font-weight: bold; font-size: 14px; position: relative; top: 1px"></span>期</td>
+    <td style="border:none;"><span style="color: #0033FF; font-weight: bold" id="tys" class="bookType"></span></td>
+    <td nowrap="nowrap" width="141" style="border:none;color: #000000;">距離封盤：<span
+            style="font-size: 104%" id="lefttime">加载中...</span></td>
+    <td colspan="6" nowrap="nowrap" style="border:none;color: #000000;">距離開獎：<span
+            style="color: red; font-size: 104%" id="awardtime">加载中...</span></td>
+    <td colspan="2" align="right" nowrap="nowrap" width="84" style="border:none;color: #000000;"><span
+            id="endTimea">49</span>秒</td>
+  </tr>
+  </tbody>
+</table>
 </div>
 <script type="text/javascript">
 
@@ -89,6 +129,7 @@
             //设置显示号码
            $(".awardBall").eq(number).html(numbers[number]);
           }
+            setTimeout("getcreditInfo()",2000);
         }
       }
     });
@@ -147,6 +188,7 @@
     var seconds = Math.floor((number/1000)%60);
     var minu = minutes > 9 ? minutes : "0"+minutes;
     var second = seconds > 9 ? seconds : "0"+seconds;
+    $("#endTimea").html(Math.floor(number/1000));
     return minu+":"+second;
   }
 
@@ -192,6 +234,16 @@
       setTimeout(decreaseKai,999);
     }
 
+  }
+
+  function getcreditInfo(){
+      $.ajax({
+          url:'/main/creditInfo',
+          success:function(data){
+              $("#max", parent.document).text(data.max);
+              $("#curent",parent.document).text(data.curent);
+          }
+      });
   }
 
 </script>

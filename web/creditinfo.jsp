@@ -7,14 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="frame/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/sGame.css">
 <head>
     <title>信用资料</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="left.jsp"></jsp:include>
-<div class="main-container col-sm-10">
+<div class="col-sm-10">
     <div class="panel panel-warning">
         <div class="panel-heading text-center">重庆时时彩</div>
             <table class="table table-bordered  text-center">

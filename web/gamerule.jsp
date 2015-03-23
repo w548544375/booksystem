@@ -9,13 +9,15 @@
 <html>
 <head>
     <title>游戏规则</title>
+  <script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="frame/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/sGame.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body style="background-color: #ffffff;">
-<jsp:include page="header.jsp"></jsp:include>
-<jsp:include page="left.jsp"></jsp:include>
-<div class="main-container col-sm-10">
-  <div class="panel panel-primary">
+<div class="col-sm-10">
+  <div class="panel">
     <div class="panel-heading">
       <h3 class="panel-title">游戏规则</h3>
     </div>
