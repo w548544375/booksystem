@@ -5,6 +5,7 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.sexry.config.EBookType;
 import com.sexry.model.User;
+import freemarker.ext.beans.HashAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -153,13 +154,17 @@ public class UserService {
                 users.put("children",objs);
                 for(User user : finduser){
                     for(Map<String,Object> obj : (List<Map<String,Object>>)users.get("children")){
-                            if(obj.get("name") == user.getStr("name"))
+                            if(obj.get("name").equals(user.getStr("name")))
                                 findChildUsers(user.getInt("id"),user.getStr("name"),obj);
                     }
 
                 }
+            }else{
+                users.put("id",parentId);
+                users.put("name",parentname);
             }
         }
+
 
     /***
      * 查询用户的输赢历史
@@ -195,9 +200,31 @@ public class UserService {
         }
 
 
-    public void caculateWin(long starttime,long endtime,String userids,String periods){
+    public List<Object> caculateWin(long starttime,long endtime,String userids,String periods){
         StringBuilder sql = new StringBuilder();
-        sql.append("");
+        sql.append("select * from sexry_result where 1=1 ");
+        if(starttime != -1){
+            sql.append(" and starttime >= "+starttime);
+        }
+        if(endtime >= -1){
+            sql.append(" and endttime <="+endtime);
+        }
+        if(userids != null && !userids.equals("")){
+            sql.append(" and userids in ("+userids+"}");
+        }
+        if(periods!= null && !periods.equals("")){
+            sql.append(" and periods in ("+periods+")");
+        }
+        List<Record> records = Db.find(sql.toString());
+
+        List<Object> result = new ArrayList<Object>();
+
+        float totalMoney = 0; //总下注金额
+        float totalWin = 0;  //总输赢
+        for (Record record : records ){
+            
+            }
+        return result;
     }
 
 
