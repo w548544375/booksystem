@@ -244,7 +244,7 @@ public class UserService {
            try {
 
                List<Map<String,Object>> historys =  new ArrayList<Map<String, Object>>();
-               List<Record> records =  Db.find("select *", "from sexry_bookhistory  where isAwarded = ? and user_id in (?) order by booktime desc", 0, ids);
+               List<Record> records =  Db.find("select * from sexry_bookhistory  where isAwarded = ? and user_id in ("+ids+") order by booktime desc", 0);
 
                SimpleDateFormat sdf = new SimpleDateFormat("YY-MM E HH:mm:ss");
 

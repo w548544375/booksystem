@@ -41,7 +41,7 @@ public class SessionListener implements HttpSessionListener {
         }
         //总人数增加
         sessionNumber ++;
-        System.out.println("当前用户:" + sessionNumber);
+        System.out.println("当前用户:" + sessionNumber+" id:"+id);
         session.setAttribute(LoginController.SESSION_KEY_LOGIN_USER, username);
         session.setAttribute(LoginController.SESSION_KEY_USERID,id); //2015 03 31 新增用户id
         sessionMap.put(username,session);

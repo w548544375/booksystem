@@ -10,6 +10,7 @@ import org.apache.commons.lang.ObjectUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -121,7 +122,8 @@ public class UserController extends Controller{
                 endTimel = sdf.parse(endTime).getTime();
                 }
             String period = getPara("peroid");
-            String ids = getPara("ids") == null ? (String)getSessionAttr(LoginController.SESSION_KEY_USERID) : getPara("ids");
+            int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
+            String ids = getParaToInt("ids") == 0 ? i+"" : getPara("ids");
             int start = getParaToInt("iDisplayStart");
             int size =  getParaToInt("iDisplayLength");
             Page<Record> records = userService.historyQuery(startTimel,endTimel,ids,period,start,size);
@@ -134,4 +136,16 @@ public class UserController extends Controller{
     }
 
 
+    @ActionKey("/user/groupBook")
+    public void queryGroupBook(){
+        int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
+        String ids = getParaToInt("ids") == 0 ? i+"" : getPara("ids");
+        List<Map<String,Object>> books = userService.allUnhandledBook(ids);
+        Map<String,Object> results = new HashMap<String, Object>();
+        results.put("data",books);
+        results.put("sEcho",getPara("sEcho"));
+        results.put("iTotalRecords",books == null ? 0:books.size());
+        results.put("iTotalDisplayRecords",books == null ? 0:books.size());
+        renderJson(results);
+    }
 }

@@ -23,8 +23,9 @@
 <script type="text/javascript" src="frame/js/jquery.form.js"></script>
 <script type="text/javascript" src="frame/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    var userId = null; //用户id
+    var userId = 0; //用户id
     var tableO = null; //输赢结果的table对象
+    var tableB = null; //下单情况的table对象
   $(document).ready(function(){
       $("#adduserform").ajaxForm();
       $("#editpassword").ajaxForm();
@@ -48,6 +49,7 @@
            // alert(userId);
             //重新加载table
             loadGroupResult("groupwin",tableO);
+            loadGroupBook("groupbook",tableB);
         }
 
 
@@ -65,8 +67,10 @@
       $("#editpassword").on('show.bs.modal',function(){
             $("#changepassword").clearForm();
       });
-
+     //初始化输赢
      tableO = loadGroupResult("groupwin",tableO);
+      //初始化订单
+      tableB =  loadGroupBook("groupbook",tableB);
   });
 
 
@@ -110,7 +114,12 @@
       return false; // 必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
   }
 
-
+    /**
+    * 帐号开奖历史纪录
+* @param id
+* @param tableObject
+* @returns {*}
+     */
    function loadGroupResult(id,tableObject){
        if (tableObject == null) {
            tableObject = $("#" + id).DataTable({
@@ -153,7 +162,6 @@
        return tableObject;
    }
 
-
   function retrieveData( sSource, aoData, fnCallback ) {
       aoData.push({"name":"ids","value":userId});
       console.log(aoData);
@@ -167,6 +175,60 @@
           }
       });
   }
+
+    /**
+    * 获取用户的订单
+* @param id
+* @param tableObject
+* @returns {*}
+     */
+    function loadGroupBook(id,tableObject){
+        if (tableObject == null) {
+            tableObject = $("#" + id).DataTable({
+                "bAutoWidth": true,
+                "columns": [{"data":"user"}, {"data":"bookcode"}, {"data":"bookperiod"}, {"data":"bookstring"},
+                    {"data":"bookmoney"}, {"data":"awardmoney"}, {"data":"booktime"}],
+                "bServerSide": true,
+                "iDisplayLength": 25,
+                //"bProcessing": true,
+                "bFilter": false,
+                "ordering":false,//禁用排序
+                "sPaginationType":"full_numbers",
+                "sAjaxSource": "/user/groupBook",//获取数据的url
+                "fnServerData": bookData,
+                "oLanguage": {                          //汉化
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "没有检索到数据",
+                    "sInfo": "第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
+                    "sInfoEmtpy": "没有数据",
+                    "sProcessing": "加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "前一页",
+                        "sNext": "后一页",
+                        "sLast": "尾页"
+                    }
+                }
+            });
+        }else{
+            tableObject.draw();
+        }
+        return tableObject;
+    }
+
+    function bookData( sSource, aoData, fnCallback ) {
+        aoData.push({"name":"ids","value":userId});
+        //console.log(aoData);
+        $.ajax( {
+            "type": "POST",
+            "url": sSource,
+            "dataType": "json",
+            "data": aoData, //以json格式传递
+            "success": function(resp) {
+                fnCallback(resp); //服务器端返回的对象的returnObject部分是要求的格式
+            }
+        });
+    }
 </script>
 <div class="row">
     <div class="col-sm-2" style="margin-left:6px;">
@@ -209,18 +271,21 @@
      </div>
   </div><!-- row -->
 
+
 <!--table 显示自己以及下线订单-->
 <div class="row" style="margin-top: 20px;">
+    <div class="col-sm-11 text-center"> <h3>订单信息</h3></div>
     <div class="col-sm-11" style="margin-left: 6px;">
-    <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
+        <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
         <thead>
             <tr>
               <td>下单帐号</td>
-              <td>单号/时间</td>
+              <td>单号</td>
               <td>期号</td>
               <td>明细</td>
               <td>金额</td>
               <td>可赢</td>
+              <td>时间</td>
             </tr>
         </thead>
         <tbody>
@@ -233,6 +298,7 @@
 
 <!--table 显示自己以及下线订单结果-->
 <div class="row">
+   <div class="col-sm-11 text-center"> <h3>开奖信息</h3></div>
     <div class="col-sm-11" style="margin-left:6px;">
     <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">
         <thead>
