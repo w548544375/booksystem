@@ -2,8 +2,15 @@ package com.sexry.controller;
 
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import com.sexry.service.UserService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -85,7 +92,7 @@ public class UserController extends Controller{
             return;
         }
 
-        renderText(userService.updatePassword((String) getSessionAttr(LoginController.SESSION_KEY_LOGIN_USER),old,newp,false));
+        renderText(userService.updatePassword((String) getSessionAttr(LoginController.SESSION_KEY_LOGIN_USER), old, newp, false));
 
     }
     //判断用户的页面权限，是否显示操作中心
@@ -93,4 +100,37 @@ public class UserController extends Controller{
     public void userHasPrivileges(){
         renderJson(userService.userPrivileges((String) getSessionAttr(LoginController.SESSION_KEY_LOGIN_USER)));
     }
+
+    /**
+     *  获取输赢
+     * @throws ParseException
+     */
+    @ActionKey("/user/groupResult")
+    public void queryGroupResult() throws ParseException {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String startTime = getPara("startTime");
+             String endTime = getPara("endTime");
+             long startTimel= 0;
+             long endTimel = 0;
+            if(startTime != null && !"".equals(startTime) ) {
+                startTimel = sdf.parse(startTime).getTime();
+                }
+            if(endTime != null && !"".equals(endTime) ) {
+                endTimel = sdf.parse(endTime).getTime();
+                }
+            String period = getPara("peroid");
+            String ids = getPara("ids");
+            int start = getParaToInt("iDisplayStart");
+            int size =  getParaToInt("iDisplayLength");
+            Page<Record> records = userService.historyQuery(startTimel,endTimel,ids,period,start,size);
+            Map<String,Object> result = new HashMap<String,Object>();
+            result.put("sEcho",getPara("sEcho"));
+            result.put("data",records.getList());
+            result.put("iTotalRecords",records.getTotalRow());
+            result.put("iTotalDisplayRecords",records.getTotalRow());
+            renderJson(result);
+    }
+
+
 }

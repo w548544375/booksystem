@@ -104,7 +104,7 @@ public class UserService {
                       .set("maxcredit",curedit)     //最大信用额度
                       .set("isbind",bind ? 1 : 0)   //是否禁用
                       .set("pid",user.getInt("id"))  //下发帐号的用户id
-                      .set("hasprivileges",hasprivileges ? 1 : 0 )  //是否有权限下发帐号
+                      .set("hasprivileges", hasprivileges ? 1 : 0)  //是否有权限下发帐号
                       .save();
 
         }catch(Exception e){
@@ -126,7 +126,7 @@ public class UserService {
                 //查找用户
                 User user = User.dao.find("select * from sexry_user where username=?", username).get(0);
                 Map<String,Object> result = new HashMap<String, Object>();
-                findChildUsers(user.getInt("id"),user.getStr("username"),result);
+                findChildUsers(user.getInt("id"), user.getStr("username"), result);
                 return result;
             }catch(Exception e){
                     e.printStackTrace();
@@ -172,26 +172,29 @@ public class UserService {
      * @param endtime     结束时间
      * @param userids       一个或者多个用户名用<stong>,</stong>隔开
      * @param periods     期号
+     * @param startplace 起始列
+     * @param persize  大小
      * @return
      */
-        public List<Record> historyQuery(long starttime,long endtime,String userids,String periods){
+        public Page<Record> historyQuery(long starttime,long endtime,String userids,String periods,int startplace,int persize){
             try{
             StringBuilder hql = new StringBuilder();
-            hql.append("select * from sexry_result where 1=1");
-            if(starttime != -1){
+            hql.append("from sexry_result where 1=1");
+            if(starttime != 0){
                 hql.append(" and starttime >= "+starttime);
             }
-            if(endtime >= -1){
+            if(endtime != 0){
                 hql.append(" and endttime <="+endtime);
             }
             if(userids != null && !userids.equals("")){
-                hql.append(" and user_id in ("+userids+"}");
+                hql.append(" and user_id in ("+userids+")");
             }
-            if(periods!= null && !periods.equals("")){
-                hql.append(" and period in ("+periods+")");
+            if(periods!= null && !periods.equals("")) {
+                hql.append(" and period in (" + periods + ")");
             }
+            int page = startplace/persize+1;
             //按条件查询出记录
-            List<Record> results = Db.find(hql.toString());
+            Page<Record> results = Db.paginate(page,persize,"select * ",hql.toString());
                 return results;
             }catch (Exception e){
                 e.printStackTrace();

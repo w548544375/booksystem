@@ -11,18 +11,20 @@
   <title>操作中心</title>
 </head>
 <body style="background-color: #ffffff;">
-<script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" href="frame/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/sGame.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="frame/css/zTreeStyle.css">
+<link rel="stylesheet" href="frame/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="frame/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="frame/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="frame/js/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="frame/js/jquery.form.js"></script>
+<script type="text/javascript" src="frame/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 
   $(document).ready(function(){
-
       $("#adduserform").ajaxForm();
       $("#editpassword").ajaxForm();
 
@@ -58,7 +60,8 @@
       $("#editpassword").on('show.bs.modal',function(){
             $("#changepassword").clearForm();
       });
-
+       var tableO = null;
+      loadGroupResult("groupwin",tableO);
   });
 
 
@@ -103,6 +106,50 @@
   }
 
 
+   function loadGroupResult(id,tableObject){
+       if (tableObject == null) {
+           var tableObject = $("#" + id).DataTable({
+               "bAutoWidth": true,
+               "columns": [{"data":"username"}, {"data":"bookcode"}, {"data":"period"}, {"data":"type"}, {"data":"money"}, {"data":"result"}, {"data":"backresult"}],
+               "bServerSide": true,
+               "iDisplayLength": 20,
+               //"bProcessing": true,
+               "bFilter": false,
+               "ordering":false,//禁用排序
+               "sPaginationType":"simple_numbers",
+               "sAjaxSource": "/user/groupResult",//获取数据的url
+               "fnServerData": retrieveData,
+               "oLanguage": {                          //汉化
+                   "sLengthMenu": "每页显示 _MENU_ 条记录",
+                   "sZeroRecords": "没有检索到数据",
+                   "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
+                   "sInfoEmtpy": "没有数据",
+                   "sProcessing": "正在加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
+                   "oPaginate": {
+                       "sFirst": "首页",
+                       "sPrevious": "前一页",
+                       "sNext": "后一页",
+                       "sLast": "尾页"
+                   }
+               }
+           });
+       }else{
+           tableObject.fnDraw();
+       }
+   }
+
+
+  function retrieveData( sSource, aoData, fnCallback ) {
+      $.ajax( {
+          "type": "POST",
+          "url": sSource,
+          "dataType": "json",
+          "data": aoData, //以json格式传递
+          "success": function(resp) {
+              fnCallback(resp); //服务器端返回的对象的returnObject部分是要求的格式
+          }
+      });
+  }
 </script>
 <div class="row">
     <div class="col-sm-2" style="margin-left:6px;">
@@ -141,13 +188,53 @@
                </div>
            </div>
        </div>
+
      </div>
   </div><!-- row -->
 
+<!--table 显示自己以及下线订单-->
+<div class="row">
+    <div class="col-sm-11 text-center" style="margin-left: 6px;">
+    <table class="display compact" width="100%" cellspacing="0" id="groupbook">
+        <thead>
+            <tr>
+              <td>姓名</td>
+              <td>单号/时间</td>
+              <td>期号</td>
+              <td>明细</td>
+              <td>金额</td>
+              <td>可赢</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    </div>
+</div>
 
 
+<!--table 显示自己以及下线订单结果-->
+<div class="row">
+    <div class="col-sm-11 text-center" style="margin-left:6px;">
+    <table class="display compact" width="100%" cellspacing="0" id="groupwin">
+        <thead>
+            <tr>
+                <td>姓名</td>
+                <td>单号/时间</td>
+                <td>期数</td>
+                <td>明细</td>
+                <td>金额</td>
+                <td>退水</td>
+                <td>结果</td>
+            </tr>
+        </thead>
+        <tbody>
 
-
+        </tbody>
+    </table>
+    </div>
+</div>
 
 
 
