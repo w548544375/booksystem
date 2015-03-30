@@ -204,7 +204,7 @@ public class AwardHistoryService {
                                      .set("result",awardmoney)
                                      .set("booktime",record.getLong("booktime"))
                                      .set("backresult",awardmoney)
-                                     .set("booktype",record.getInt("booktype")) //写入类型
+                                    // .set("booktype",record.getInt("booktype")) //写入类型
                             .save();
                 //更新user的信用额度
                     Float curent = record.getFloat("curentcredit");
