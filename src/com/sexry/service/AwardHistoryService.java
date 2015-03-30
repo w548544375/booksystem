@@ -57,7 +57,7 @@ public class AwardHistoryService {
     public void anayliseAwardBook(String awardPeriod ,Map<String,Object> awardresult){
             //查找所有订单期数为period的订单
             String sql = "select * from sexry_bookdetail inner join sexry_bookhistory on sexry_bookhistory.bookcode = sexry_bookdetail.bookcode" +
-                    " inner join sexry_user on sexry_user.username=sexry_bookhistory.bookuser_name  where"+
+                    " inner join sexry_user on sexry_user.id=sexry_bookhistory.user_id where"+
                     " sexry_bookhistory.awardperiods=?";
 
             List<Record> details = Db.find(sql,awardPeriod);
@@ -197,6 +197,7 @@ public class AwardHistoryService {
                     //存入数据库
                     new AwardResult().set("bookcode",record.getStr("bookcode"))
                                      .set("username",record.getStr("bookuser_name"))
+                                     .set("user_id",record.getInt("user_id"))
                                      .set("period",awardPeriod)
                                      .set("type",typestring)
                                      .set("money",record.getFloat("money"))

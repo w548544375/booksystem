@@ -185,10 +185,10 @@ public class UserService {
                 hql.append(" and endttime <="+endtime);
             }
             if(userids != null && !userids.equals("")){
-                hql.append(" and userids in ("+userids+"}");
+                hql.append(" and user_id in ("+userids+"}");
             }
             if(periods!= null && !periods.equals("")){
-                hql.append(" and periods in ("+periods+")");
+                hql.append(" and period in ("+periods+")");
             }
             //按条件查询出记录
             List<Record> results = Db.find(hql.toString());
@@ -210,10 +210,10 @@ public class UserService {
             sql.append(" and endttime <="+endtime);
         }
         if(userids != null && !userids.equals("")){
-            sql.append(" and userids in ("+userids+"}");
+            sql.append(" and user_id in ("+userids+")");
         }
         if(periods!= null && !periods.equals("")){
-            sql.append(" and periods in ("+periods+")");
+            sql.append(" and period in ("+periods+")");
         }
         List<Record> records = Db.find(sql.toString());
 
@@ -222,7 +222,9 @@ public class UserService {
         float totalMoney = 0; //总下注金额
         float totalWin = 0;  //总输赢
         for (Record record : records ){
-            
+            float perMoney = record.getFloat("money");
+
+
             }
         return result;
     }
