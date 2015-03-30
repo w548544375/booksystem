@@ -115,7 +115,7 @@
       data:{"period":period},
       type:'get',
       success:function (data){
-        console.log(data);
+        //console.log(data);
         if(data.status == -2){
           /**没有开奖的时候间隔2秒再次拉取数据*/
           setTimeout("secondRequest("+period+")",2000);

@@ -5,6 +5,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.sexry.service.UserService;
+import org.apache.commons.lang.ObjectUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -120,7 +121,7 @@ public class UserController extends Controller{
                 endTimel = sdf.parse(endTime).getTime();
                 }
             String period = getPara("peroid");
-            String ids = getPara("ids");
+            String ids = getPara("ids") == null ? (String)getSessionAttr(LoginController.SESSION_KEY_USERID) : getPara("ids");
             int start = getParaToInt("iDisplayStart");
             int size =  getParaToInt("iDisplayLength");
             Page<Record> records = userService.historyQuery(startTimel,endTimel,ids,period,start,size);

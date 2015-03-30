@@ -22,7 +22,7 @@ public class LoginController extends Controller{
 
     public static final String SESSION_KEY_LOGIN_USER ="user";
     public static final String SESSION_KEY_IMG ="sessionImg";
-
+    public static final String SESSION_KEY_USERID = "userId";
     //图片宽高
     private int width = 173;
     private int height = 34;
@@ -72,16 +72,16 @@ public class LoginController extends Controller{
     public void validateLogin(){
       String userName = getPara("username");
       String password = getPara("password");
-      boolean bLogin = false;
+      int bLogin = 0;
       try {
           bLogin = loginService.validateLogin(userName,password);
       } catch (Exception e) {
           renderText(e.getMessage());
           return;
       }
-      if (bLogin){
+      if (bLogin > 0){
             //setSessionAttr(SESSION_KEY_LOGIN_USER,userName);
-            if (SessionListener.addSession(getSession(),userName)){
+            if (SessionListener.addSession(getSession(),userName,bLogin)){
                 renderText("suc");
                 }else{
                 //removeSessionAttr(LoginController.SESSION_KEY_LOGIN_USER);

@@ -33,7 +33,7 @@ public class SessionListener implements HttpSessionListener {
 
     }
 
-    public static boolean addSession(HttpSession session,String username){
+    public static boolean addSession(HttpSession session,String username,int id){
         if(sessionMap.containsKey(username)){
             sessionMap.get(username).invalidate();
             sessionMap.remove(username);
@@ -42,7 +42,8 @@ public class SessionListener implements HttpSessionListener {
         //总人数增加
         sessionNumber ++;
         System.out.println("当前用户:" + sessionNumber);
-        session.setAttribute(LoginController.SESSION_KEY_LOGIN_USER,username);
+        session.setAttribute(LoginController.SESSION_KEY_LOGIN_USER, username);
+        session.setAttribute(LoginController.SESSION_KEY_USERID,id); //2015 03 31 新增用户id
         sessionMap.put(username,session);
         return true;
     }

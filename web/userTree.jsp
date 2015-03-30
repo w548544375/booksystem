@@ -23,7 +23,8 @@
 <script type="text/javascript" src="frame/js/jquery.form.js"></script>
 <script type="text/javascript" src="frame/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-
+    var userId = null; //用户id
+    var tableO = null; //输赢结果的table对象
   $(document).ready(function(){
       $("#adduserform").ajaxForm();
       $("#editpassword").ajaxForm();
@@ -42,7 +43,11 @@
 
         //数点击事件
         function zTreeOnClick(event, treeId, treeNode) {
-
+            //treeNode.id
+            userId = treeNode.id;
+           // alert(userId);
+            //重新加载table
+            loadGroupResult("groupwin",tableO);
         }
 
 
@@ -60,8 +65,8 @@
       $("#editpassword").on('show.bs.modal',function(){
             $("#changepassword").clearForm();
       });
-       var tableO = null;
-      loadGroupResult("groupwin",tableO);
+
+     tableO = loadGroupResult("groupwin",tableO);
   });
 
 
@@ -108,23 +113,32 @@
 
    function loadGroupResult(id,tableObject){
        if (tableObject == null) {
-           var tableObject = $("#" + id).DataTable({
+           tableObject = $("#" + id).DataTable({
                "bAutoWidth": true,
-               "columns": [{"data":"username"}, {"data":"bookcode"}, {"data":"period"}, {"data":"type"}, {"data":"money"}, {"data":"result"}, {"data":"backresult"}],
+               "columns": [{"data":"username"}, {"data":"bookcode"}, {"data":"period"}, {"data":"type"},
+                   {"data":"money"}, {"data":"result"}, {"data":"backresult"},{"data":"booktime"}],
+               "columnDefs":[{
+                   "render":function(data,type,row){
+                       var date = new Date();
+                       date.setTime(data);
+                       return date.toDateString();
+                    },
+                   "targets":7
+               }],
                "bServerSide": true,
-               "iDisplayLength": 20,
+               "iDisplayLength": 25,
                //"bProcessing": true,
                "bFilter": false,
                "ordering":false,//禁用排序
-               "sPaginationType":"simple_numbers",
+               "sPaginationType":"full_numbers",
                "sAjaxSource": "/user/groupResult",//获取数据的url
                "fnServerData": retrieveData,
                "oLanguage": {                          //汉化
                    "sLengthMenu": "每页显示 _MENU_ 条记录",
                    "sZeroRecords": "没有检索到数据",
-                   "sInfo": "当前数据为从第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
+                   "sInfo": "第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
                    "sInfoEmtpy": "没有数据",
-                   "sProcessing": "正在加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
+                   "sProcessing": "加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
                    "oPaginate": {
                        "sFirst": "首页",
                        "sPrevious": "前一页",
@@ -134,12 +148,15 @@
                }
            });
        }else{
-           tableObject.fnDraw();
+           tableObject.draw();
        }
+       return tableObject;
    }
 
 
   function retrieveData( sSource, aoData, fnCallback ) {
+      aoData.push({"name":"ids","value":userId});
+      console.log(aoData);
       $.ajax( {
           "type": "POST",
           "url": sSource,
@@ -193,12 +210,12 @@
   </div><!-- row -->
 
 <!--table 显示自己以及下线订单-->
-<div class="row">
-    <div class="col-sm-11 text-center" style="margin-left: 6px;">
-    <table class="display compact" width="100%" cellspacing="0" id="groupbook">
+<div class="row" style="margin-top: 20px;">
+    <div class="col-sm-11" style="margin-left: 6px;">
+    <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
         <thead>
             <tr>
-              <td>姓名</td>
+              <td>下单帐号</td>
               <td>单号/时间</td>
               <td>期号</td>
               <td>明细</td>
@@ -216,17 +233,18 @@
 
 <!--table 显示自己以及下线订单结果-->
 <div class="row">
-    <div class="col-sm-11 text-center" style="margin-left:6px;">
-    <table class="display compact" width="100%" cellspacing="0" id="groupwin">
+    <div class="col-sm-11" style="margin-left:6px;">
+    <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">
         <thead>
             <tr>
-                <td>姓名</td>
-                <td>单号/时间</td>
+                <td>下单帐号</td>
+                <td>单号</td>
                 <td>期数</td>
                 <td>明细</td>
                 <td>金额</td>
                 <td>退水</td>
                 <td>结果</td>
+                <td>时间</td>
             </tr>
         </thead>
         <tbody>

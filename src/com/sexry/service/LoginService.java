@@ -86,7 +86,7 @@ public class LoginService {
      *
      * @return
      */
-    public boolean validateLogin(String userName,String password) throws Exception{
+    public int validateLogin(String userName,String password) throws Exception{
         String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Pattern   p   =   Pattern.compile(regEx);
         Matcher m   =   p.matcher(userName);
@@ -101,7 +101,7 @@ public class LoginService {
             if(userd.getInt("isbind") == 1)
                 throw new Exception("用户被封，无法登录");
             else
-                return true;
+                return userd.getInt("id");
         }else{
             throw new Exception("密码错误");
            // return false;
