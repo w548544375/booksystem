@@ -197,10 +197,10 @@ public class UserService {
             StringBuilder hql = new StringBuilder();
             hql.append("from sexry_result where 1=1");
             if(starttime != 0){
-                hql.append(" and starttime >= "+starttime);
+                hql.append(" and booktime >= "+starttime);
             }
             if(endtime != 0){
-                hql.append(" and endttime <="+endtime);
+                hql.append(" and booktime <="+endtime);
             }
             if(userids != null && !userids.equals("")){
                 hql.append(" and user_id in ("+userids+")");
@@ -208,6 +208,7 @@ public class UserService {
             if(periods!= null && !periods.equals("")) {
                 hql.append(" and period in (" + periods + ")");
             }
+                hql.append(" order by booktime desc");
             int page = startplace/persize+1;
             //按条件查询出记录
             Page<Record> results = Db.paginate(page,persize,"select * ",hql.toString());
@@ -256,30 +257,33 @@ public class UserService {
      * @param ids  要查询的用户订单的id集合用<strong>,</strong>分开
      * @return
      */
-       public List<Map<String,Object>> allUnhandledBook(String ids){
+       public Map<String,Object> allUnhandledBook(int istart,int perSize,String ids){
            try {
 
-               List<Map<String,Object>> historys =  new ArrayList<Map<String, Object>>();
-               List<Record> records =  Db.find("select * from sexry_bookhistory  where isAwarded = ? and user_id in ("+ids+") order by booktime desc", 0);
+               int page = istart/perSize + 1;
+               Page<Record> records =  Db.paginate(page,perSize,"select sexry_bookhistory.*,sexry_bookdefine.multiple_number,sexry_bookdetail.ballnumber,sexry_bookdetail.number,sexry_bookdetail.booktype,sexry_bookdetail.money",
+                       " from sexry_bookhistory  left join sexry_bookdetail on sexry_bookdetail.bookcode=sexry_bookhistory.bookcode " +
+                       " inner join sexry_bookdefine on sexry_bookdetail.booktype=sexry_bookdefine.booktype  where isAwarded=1 and user_id in (?)",ids);
 
                SimpleDateFormat sdf = new SimpleDateFormat("YY-MM E HH:mm:ss");
 
                //user所有未处理的订单
-               for(Record record : records){
-                   Map<String,Object> map = new HashMap<String, Object>();
-                   String bookcode = record.getStr("bookcode");
-                   //查询出所有的订单详细
-                   String hql = "select sexry_bookdetail.*,sexry_bookdefine.multiple_number as multiple from sexry_bookdetail inner join sexry_bookdefine on sexry_bookdetail.booktype = sexry_bookdefine.booktype  where sexry_bookdetail.bookcode=?";
-                   List<Record> details =  Db.find(hql, bookcode);
                    //遍历订单详细
                    String detailstring ="";
                    //下单总金额
                    float money=0;
                    //每个订单的可赢金额
                    float awardmoney = 0;
+
+                    //获取查询出来的记录
+                   List<Record> details = records.getList();
+                    //储存结果
+                   List<Object> historys = new ArrayList<Object>();
+
                    for(Record detail: details){
+                       Map<String,Object> map = new HashMap<String, Object>();
                        //赔率
-                       float multiple = detail.getFloat("multiple");
+                       float multiple = detail.getFloat("multiple_number");
                        //下注类型
                        String typestring = EBookType.getName(detail.getInt("booktype"));
                        int ballnumber = detail.getInt("ballnumber");
@@ -305,24 +309,25 @@ public class UserService {
                                break;
                        }
                        //
-                       detailstring = typestring+"@"+multiple+"倍x"+detail.getFloat("money")+"元<br/>";
+                       detailstring = typestring+"@"+multiple+"倍x"+detail.getFloat("money");
                        //下注金额
                        float singlemoney = detail.getFloat("money");
                        money = singlemoney;
                        awardmoney = singlemoney * (multiple-1);
 
                        map.put("bookmoney",money);
-                       map.put("bookcode",record.getStr("bookcode"));//订单号
-                       map.put("booktime", sdf.format(record.getLong("booktime")));//下单时间
+                       map.put("bookcode",detail.getStr("bookcode"));//订单号
+                       map.put("booktime", sdf.format(detail.getLong("booktime")));//下单时间
                        map.put("bookstring",detailstring);//订单详细
-                       map.put("bookperiod",record.getStr("awardperiods"));//下注期数
+                       map.put("bookperiod",detail.getStr("awardperiods"));//下注期数
                        map.put("awardmoney",awardmoney);//可赢金额
-                       map.put("user",record.getStr("bookuser_name"));//下注人的名字
+                       map.put("user",detail.getStr("bookuser_name"));//下注人的名字
                        historys.add(map);
                    }
-               }
-
-            return historys;
+                    Map<String,Object> result = new HashMap<String, Object>();
+                    result.put("data",historys);
+                    result.put("totalRow",records.getTotalRow());
+                    return result;
            }catch (Exception e){
                e.printStackTrace();
                return null;

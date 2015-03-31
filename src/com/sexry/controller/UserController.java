@@ -142,20 +142,26 @@ public class UserController extends Controller{
 
     @ActionKey("/user/groupBook")
     public void queryGroupBook(){
-        int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
-        String ids = getParaToInt("ids") == 0 ? i+"" : getPara("ids");
-        String type = getPara("type");
-        if("2A".equals(type)){
-            StringBuilder stringBuilder = new StringBuilder();
-            userService.findChildUsersId(Integer.parseInt(ids),stringBuilder); //查询子账号
-            ids = stringBuilder.deleteCharAt(stringBuilder.length()-1).toString();
+        try {
+            int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
+            String ids = getParaToInt("ids") == 0 ? i + "" : getPara("ids");
+            String type = getPara("type");
+            if ("2A".equals(type)) {
+                StringBuilder stringBuilder = new StringBuilder();
+                userService.findChildUsersId(Integer.parseInt(ids), stringBuilder); //查询子账号
+                ids = stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
+            }
+            int istart = getParaToInt("iDisplayStart");
+            int length = getParaToInt("iDisplayLength");
+            Map<String, Object> books = userService.allUnhandledBook(istart, length, ids);
+            books.put("data", books.get("data"));
+            books.put("sEcho", getPara("sEcho"));
+            books.put("iTotalRecords", books.get("totalRow"));
+            books.put("iTotalDisplayRecords", books.get("totalRow"));
+            renderJson(books);
+        }catch (Exception e){
+            e.printStackTrace();
+            renderText("非法参数！");
         }
-        List<Map<String,Object>> books = userService.allUnhandledBook(ids);
-        Map<String,Object> results = new HashMap<String, Object>();
-        results.put("data",books);
-        results.put("sEcho",getPara("sEcho"));
-        results.put("iTotalRecords",books == null ? 0:books.size());
-        results.put("iTotalDisplayRecords",books == null ? 0:books.size());
-        renderJson(results);
     }
 }

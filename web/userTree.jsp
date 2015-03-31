@@ -26,11 +26,12 @@
     var userId = 0; //用户id
     var tableO = null; //输赢结果的table对象
     var tableB = null; //下单情况的table对象
-    var queryType = "2B"; //要查询的类型
+    var queryType = "2A"; //要查询的类型
   $(document).ready(function(){
       $("#adduserform").ajaxForm();
       $("#editpassword").ajaxForm();
-
+        $("#book").show();
+        $("#win").hide();
     var setting = {
       async: {
         enable: true,
@@ -159,8 +160,26 @@
                     },
                    "targets":7
                }],
+               "createdRow":function(row,data,index){
+                    if(data.result > 0){
+                        $('td', row).eq(6).css('font-weight',"bold").css("color","green");
+                    }else{
+                        $('td', row).eq(6).css('font-weight',"bold").css("color","red");
+                    }
+                },
+               "footerCallback":function(row, data, start, end, display ){
+                   var api = this.api(), data;
+                   var summoney = 0;
+                   var sumresult = 0;
+                   for(var i=0;i<data.length;i++){
+                    summoney += data[i].money;
+                    sumresult += data[i].result;
+                       // Update footer
+                   }
+                   $( api.column(7).footer()).html("总下注金额:"+summoney+",退水结果:"+sumresult);
+               },
                "bServerSide": true,
-               "iDisplayLength": 35,
+               "iDisplayLength": 30,
                //"bProcessing": true,
                "bLengthChange":false,
                "bFilter": false,
@@ -170,9 +189,9 @@
                "fnServerData": retrieveData,
                "oLanguage": {                          //汉化
                    "sLengthMenu": "每页显示 _MENU_ 条记录",
-                   "sZeroRecords": "没有检索到数据",
-                   "sInfo": "第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
-                   "sInfoEmtpy": "没有数据",
+                   "sZeroRecords": "没有人下单",
+                   "sInfo": "第 _START_ 到第 _END_ 笔订单/共有 _TOTAL_ 笔订单",
+                   "sInfoEmtpy": "没有订单",
                    "sProcessing": "加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
                    "oPaginate": {
                        "sFirst": "首页",
@@ -216,20 +235,32 @@
                 "columns": [{"data":"user"}, {"data":"bookcode"}, {"data":"bookperiod"}, {"data":"bookstring"},
                     {"data":"bookmoney"}, {"data":"awardmoney"}, {"data":"booktime"}],
                 "bServerSide": true,
-                "iDisplayLength": 35,
+                "iDisplayLength": 30,
                 //"bProcessing": true,
                 "bFilter": false,
                 "ordering":false,//禁用排序
                 "bLengthChange":false,
                 "sPaginationType":"full_numbers",
                 "sAjaxSource": "/user/groupBook",//获取数据的url
+                "footerCallback":function(row, data, start, end, display ){
+                    var api = this.api(), data;
+                    var summoney = 0;
+                    var sumaward = 0;
+                    console.log(data);
+                    for(var i=0;i<data.length;i++){
+                        summoney += data[i].bookmoney;
+                        sumaward += data[i].awardmoney;
+                        // Update footer
+                    }
+                    $( api.column(6).footer()).html("总下注金额:"+summoney+",可赢:"+sumaward);
+                },
                 "fnServerData": bookData,
                 "oLanguage": {                          //汉化
                     "sLengthMenu": "每页显示 _MENU_ 条记录",
-                    "sZeroRecords": "没有检索到数据",
-                    "sInfo": "第 _START_ 到第 _END_ 条数据/共有 _TOTAL_ 条记录",
-                    "sInfoEmtpy": "没有数据",
-                    "sProcessing": "加载数据...<i class=\"fa fa-spinner fa-pulse\"></i>",
+                    "sZeroRecords": "没有人下单",
+                    "sInfo": "第 _START_ 到第 _END_ 笔订单/共有 _TOTAL_ 笔订单",
+                    "sInfoEmtpy": "没有订单",
+                    "sProcessing": "加载订单...<i class=\"fa fa-spinner fa-pulse\"></i>",
                     "oPaginate": {
                         "sFirst": "首页",
                         "sPrevious": "前一页",
@@ -281,8 +312,8 @@
                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editpassword">修改密码</button>
                    <button type="button" class="btn btn-default" id="1A">他的订单</button>
                    <button type="button" class="btn btn-default" id="1B">他的开奖</button>
-                   <button type="button" class="btn btn-default" id="2A">他们的订单</button>
-                   <button type="button" class="btn btn-default" id="2B">他们的开奖</button>
+                   <button type="button" class="btn btn-default" id="2A">所有子账号的订单</button>
+                   <button type="button" class="btn btn-default" id="2B">所有子账号的开奖</button>
                    <%--<div class="btn-group" role="group">--%>
                        <%--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">--%>
                          <%--排行统计--%>
@@ -299,7 +330,7 @@
        </div> <!--panel-->
 
         <!--table 显示自己以及下线订单-->
-        <div class="col-sm-12" id="book">
+        <div class="row" id="book">
             <div class="text-center"> <h3>订单信息</h3></div>
 
             <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
@@ -314,15 +345,22 @@
                     <td>时间</td>
                 </tr>
                 </thead>
+
                 <tbody>
 
                 </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6" style="text-align:right"></th>
+                    <th></th>
+                </tr>
+                </tfoot>
             </table>
         </div>
 
 
         <!--table 显示自己以及下线订单结果-->
-        <div class="col-sm-12"  id="win">
+        <div class="row"  id="win">
             <div class="text-center"> <h3>开奖信息</h3></div>
 
             <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">
@@ -338,6 +376,12 @@
                     <td>时间</td>
                 </tr>
                 </thead>
+                <tfoot>
+                <tr>
+                    <th colspan="7" style="text-align:right"></th>
+                    <th></th>
+                </tr>
+                </tfoot>
                 <tbody>
 
                 </tbody>
