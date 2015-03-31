@@ -164,7 +164,11 @@ public class UserService {
             }
         }
 
-
+    /**
+     *  只查询子账户，不包括自己
+     * @param parentId
+     * @param sb
+     */
       public void findChildUsersId(int parentId,StringBuilder sb){
           List<Record> finduser = Db.find("select id from sexry_user where pid=?",parentId);
           if (finduser.size() > 0){

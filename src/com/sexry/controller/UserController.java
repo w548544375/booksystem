@@ -144,6 +144,12 @@ public class UserController extends Controller{
     public void queryGroupBook(){
         int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
         String ids = getParaToInt("ids") == 0 ? i+"" : getPara("ids");
+        String type = getPara("type");
+        if("2A".equals(type)){
+            StringBuilder stringBuilder = new StringBuilder();
+            userService.findChildUsersId(Integer.parseInt(ids),stringBuilder); //查询子账号
+            ids = stringBuilder.deleteCharAt(stringBuilder.length()-1).toString();
+        }
         List<Map<String,Object>> books = userService.allUnhandledBook(ids);
         Map<String,Object> results = new HashMap<String, Object>();
         results.put("data",books);

@@ -89,9 +89,11 @@
           if(type == "2A" || type == "1A"){
                 $("#win").hide();
                 $("#book").show();
+                loadGroupBook("groupbook",tableB);
           }else if(type=="1B" || type=="2B"){
               $("#book").hide();
               $("#win").show();
+              loadGroupResult("groupwin",tableO);
           }
       });
 
@@ -294,59 +296,60 @@
                    <%--</div>--%>
                </div>
            </div>
-       </div>
+       </div> <!--panel-->
 
-     </div>
+        <!--table 显示自己以及下线订单-->
+        <div class="col-sm-12" id="book">
+            <div class="text-center"> <h3>订单信息</h3></div>
+
+            <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
+                <thead>
+                <tr>
+                    <td>下单帐号</td>
+                    <td>单号</td>
+                    <td>期号</td>
+                    <td>明细</td>
+                    <td>金额</td>
+                    <td>可赢</td>
+                    <td>时间</td>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <!--table 显示自己以及下线订单结果-->
+        <div class="col-sm-12"  id="win">
+            <div class="text-center"> <h3>开奖信息</h3></div>
+
+            <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">
+                <thead>
+                <tr>
+                    <td>下单帐号</td>
+                    <td>单号</td>
+                    <td>期数</td>
+                    <td>明细</td>
+                    <td>金额</td>
+                    <td>退水</td>
+                    <td>结果</td>
+                    <td>时间</td>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
   </div><!-- row -->
 
 
-<!--table 显示自己以及下线订单-->
-<div class="row" style="margin-top: 20px;" id="book">
-    <div class="col-sm-11 text-center"> <h3>订单信息</h3></div>
-    <div class="col-sm-11" style="margin-left: 6px;">
-        <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
-        <thead>
-            <tr>
-              <td>下单帐号</td>
-              <td>单号</td>
-              <td>期号</td>
-              <td>明细</td>
-              <td>金额</td>
-              <td>可赢</td>
-              <td>时间</td>
-            </tr>
-        </thead>
-        <tbody>
 
-        </tbody>
-    </table>
-    </div>
-</div>
-
-
-<!--table 显示自己以及下线订单结果-->
-<div class="row" id="win">
-   <div class="col-sm-11 text-center"> <h3>开奖信息</h3></div>
-    <div class="col-sm-11" style="margin-left:6px;">
-    <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">
-        <thead>
-            <tr>
-                <td>下单帐号</td>
-                <td>单号</td>
-                <td>期数</td>
-                <td>明细</td>
-                <td>金额</td>
-                <td>退水</td>
-                <td>结果</td>
-                <td>时间</td>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
-    </div>
-</div>
 
 
 
