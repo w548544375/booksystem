@@ -26,6 +26,7 @@
     var userId = 0; //用户id
     var tableO = null; //输赢结果的table对象
     var tableB = null; //下单情况的table对象
+    var queryType = "2B"; //要查询的类型
   $(document).ready(function(){
       $("#adduserform").ajaxForm();
       $("#editpassword").ajaxForm();
@@ -47,10 +48,13 @@
             //treeNode.id
             userId = treeNode.id;
            // alert(userId);
-            //重新加载table
-            loadGroupResult("groupwin",tableO);
-            loadGroupBook("groupbook",tableB);
-        }
+            //根据查看的选项进行加载数据
+            if(queryType == "2A" || queryType == "1A"){
+                loadGroupBook("groupbook",tableB);
+                 }else if(queryType=="1B" || queryType=="2B"){
+                loadGroupResult("groupwin",tableO);
+                }
+         }
 
 
 
@@ -71,6 +75,26 @@
      tableO = loadGroupResult("groupwin",tableO);
       //初始化订单
       tableB =  loadGroupBook("groupbook",tableB);
+
+
+      //绑定按钮点击事件
+      $(".btn-group").delegate("button","click",function(){
+       //去除其他有danger的标记
+          $(".btn-danger").removeClass("btn-danger").addClass("btn-default");
+          //给自身加上danger标记
+          $(this).removeClass("btn-default").addClass("btn-danger");
+          //如果是订单就要隐藏开奖结果，如果是开奖结果就要影藏订单
+        var type = $(this).attr("id");
+          queryType = type;
+          if(type == "2A" || type == "1A"){
+                $("#win").hide();
+                $("#book").show();
+          }else if(type=="1B" || type=="2B"){
+              $("#book").hide();
+              $("#win").show();
+          }
+      });
+
   });
 
 
@@ -104,7 +128,6 @@
           if(message == "suc") {
               $("#changepassword").clearForm();
               $("#editpassword").modal('hide');
-
           }
           else{
               alert(message);
@@ -135,8 +158,9 @@
                    "targets":7
                }],
                "bServerSide": true,
-               "iDisplayLength": 25,
+               "iDisplayLength": 35,
                //"bProcessing": true,
+               "bLengthChange":false,
                "bFilter": false,
                "ordering":false,//禁用排序
                "sPaginationType":"full_numbers",
@@ -164,7 +188,8 @@
 
   function retrieveData( sSource, aoData, fnCallback ) {
       aoData.push({"name":"ids","value":userId});
-      console.log(aoData);
+      aoData.push({"name":"type","value":queryType});
+     // console.log(aoData);
       $.ajax( {
           "type": "POST",
           "url": sSource,
@@ -189,10 +214,11 @@
                 "columns": [{"data":"user"}, {"data":"bookcode"}, {"data":"bookperiod"}, {"data":"bookstring"},
                     {"data":"bookmoney"}, {"data":"awardmoney"}, {"data":"booktime"}],
                 "bServerSide": true,
-                "iDisplayLength": 25,
+                "iDisplayLength": 35,
                 //"bProcessing": true,
                 "bFilter": false,
                 "ordering":false,//禁用排序
+                "bLengthChange":false,
                 "sPaginationType":"full_numbers",
                 "sAjaxSource": "/user/groupBook",//获取数据的url
                 "fnServerData": bookData,
@@ -218,6 +244,7 @@
 
     function bookData( sSource, aoData, fnCallback ) {
         aoData.push({"name":"ids","value":userId});
+        aoData.push({"name":"type","value":queryType});
         //console.log(aoData);
         $.ajax( {
             "type": "POST",
@@ -250,20 +277,21 @@
                <div class="btn-group" role="group" aria-label="...">
                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#adduser">下发帐号</button>
                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editpassword">修改密码</button>
-                   <button type="button" class="btn btn-default">历史查询</button>
-                   <button type="button" class="btn btn-default">未处理订单</button>
-                   <button type="button" class="btn btn-default">已处理订单</button>
-                   <div class="btn-group" role="group">
-                       <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                         排行统计
-                           <span class="caret"></span>
-                       </button>
-                       <ul class="dropdown-menu" role="menu">
-                           <li><a href="#">下线下注排行</a></li>
-                           <li><a href="#">下线输赢排行</a></li>
-                           <li><a href="#">下线输赢</a></li>
-                       </ul>
-                   </div>
+                   <button type="button" class="btn btn-default" id="1A">他的订单</button>
+                   <button type="button" class="btn btn-default" id="1B">他的开奖</button>
+                   <button type="button" class="btn btn-default" id="2A">他们的订单</button>
+                   <button type="button" class="btn btn-default" id="2B">他们的开奖</button>
+                   <%--<div class="btn-group" role="group">--%>
+                       <%--<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">--%>
+                         <%--排行统计--%>
+                           <%--<span class="caret"></span>--%>
+                       <%--</button>--%>
+                       <%--<ul class="dropdown-menu" role="menu">--%>
+                           <%--<li><a href="#">下线下注排行</a></li>--%>
+                           <%--<li><a href="#">下线输赢排行</a></li>--%>
+                           <%--<li><a href="#">下线输赢</a></li>--%>
+                       <%--</ul>--%>
+                   <%--</div>--%>
                </div>
            </div>
        </div>
@@ -273,7 +301,7 @@
 
 
 <!--table 显示自己以及下线订单-->
-<div class="row" style="margin-top: 20px;">
+<div class="row" style="margin-top: 20px;" id="book">
     <div class="col-sm-11 text-center"> <h3>订单信息</h3></div>
     <div class="col-sm-11" style="margin-left: 6px;">
         <table class="display compact text-center" width="100%" cellspacing="0" id="groupbook">
@@ -297,7 +325,7 @@
 
 
 <!--table 显示自己以及下线订单结果-->
-<div class="row">
+<div class="row" id="win">
    <div class="col-sm-11 text-center"> <h3>开奖信息</h3></div>
     <div class="col-sm-11" style="margin-left:6px;">
     <table class="display compact  text-center" width="100%" cellspacing="0" id="groupwin">

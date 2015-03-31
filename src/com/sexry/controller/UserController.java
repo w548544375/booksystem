@@ -5,14 +5,12 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.sexry.service.UserService;
-import org.apache.commons.lang.ObjectUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 
 /**
@@ -123,7 +121,13 @@ public class UserController extends Controller{
                 }
             String period = getPara("peroid");
             int i = getSessionAttr(LoginController.SESSION_KEY_USERID);
-            String ids = getParaToInt("ids") == 0 ? i+"" : getPara("ids");
+            String type = getPara("type");
+            String ids = getParaToInt("ids") == 0 ? i + "" : getPara("ids");;
+           if("2B".equals(type)){
+                    StringBuilder stringBuilder = new StringBuilder();
+                    userService.findChildUsersId(Integer.parseInt(ids),stringBuilder); //查询子账号
+                    ids = stringBuilder.deleteCharAt(stringBuilder.length()-1).toString();
+                }
             int start = getParaToInt("iDisplayStart");
             int size =  getParaToInt("iDisplayLength");
             Page<Record> records = userService.historyQuery(startTimel,endTimel,ids,period,start,size);

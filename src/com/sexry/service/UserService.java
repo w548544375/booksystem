@@ -5,7 +5,6 @@ import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.sexry.config.EBookType;
 import com.sexry.model.User;
-import freemarker.ext.beans.HashAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -164,6 +163,19 @@ public class UserService {
                 users.put("name",parentname);
             }
         }
+
+
+      public void findChildUsersId(int parentId,StringBuilder sb){
+          List<Record> finduser = Db.find("select id from sexry_user where pid=?",parentId);
+          if (finduser.size() > 0){
+              for(Record record : finduser){
+                  sb.append(record.getInt("id")+",");
+                    findChildUsersId(record.getInt("id"),sb);
+              }
+            }
+
+        }
+
 
 
     /***
