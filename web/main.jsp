@@ -42,13 +42,13 @@
 <jsp:include page="left.jsp"></jsp:include>
   <div class="main-container">
           <jsp:include page="awardinfo.jsp"></jsp:include>
-        <iframe name="right" id="main-container" height="150%" width="100%" frameborder="0" src="twoside.jsp" scrolling="no"></iframe>
+        <iframe name="right" id="main-container" height="150%" width="1060" frameborder="0" src="twoside.jsp" scrolling="no"></iframe>
   </div>
   <div style="width: 100%; height: 23px; position: fixed; bottom: 0;background: url(images/bg.gif)" >
     <marquee direction="left" behavior="alternate" onMouseOut="this.start()" onMouseIn="this.stop()" style="font-size: 15px;
 line-height: 1.7;
 color: chocolate;">
-      吸烟有害健康，请尽早戒烟！
+      祝君赢得满堂彩！
     </marquee>
   </div>
 <script type="text/javascript">
